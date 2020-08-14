@@ -1,5 +1,17 @@
+var username;
+var email_address;
+var correct=0;
+
+function storeDetails() {
+    nameText = document.getElementById("form3");
+    emailText = document.getElementById("form2");
+    username = nameText.value;
+    email_address = emailText.value;
+    alert("Hello, "+nameText.value+" Your quiz is getting ready....")
+    window.location.replace("C:/Users/gaura/Desktop/TypeScript%20Bootcamp/QuizGame/Pages/main.html");
+}
+
 function start_timer() {
-    
     var timer = document.getElementById("timer");
     timer.innerHTML = "Time Left: ";
     var sec         = 1800,
@@ -24,10 +36,10 @@ function start_timer() {
             sec = sec - 1;
         } else {
             clearInterval(countDown);
-            countDiv.innerHTML = 'countdown done';
+            alert("Your Time is over..")
+            window.location.replace("C:/Users/gaura/Desktop/TypeScript%20Bootcamp/QuizGame/Pages/finish.html");
             }
     }
-    //createQuiz();
 }
 
 data = {
@@ -62,12 +74,10 @@ data = {
     ]
   }
 
-//var ch = ["a", "b", "c", "d"]
+
 function createQuiz() {
     var ch = ["a", "b", "c", "d"];
-    //console.log(ch[0]);
     for (i in data.QA) {
-        //console.log(i);
         var div_count = Math.floor(i/1);
         console.log(div_count);
         var div_form = document.getElementById("set"+(div_count+1));
@@ -95,13 +105,10 @@ function createQuiz() {
         div_element.appendChild(ul_list);
         div_form.appendChild(div_element);
       }
-
-    
 }
 
 function toChecked() {
-    //window.alert("heloo");
-    correct="";
+    //correct="";
     for(i in data.QA) {   
        var choices = document.getElementsByName("q"+data.QA[i].id);
        var arr=[]; 
@@ -114,5 +121,7 @@ function toChecked() {
         if(JSON.stringify(data.QA[i].answers)==JSON.stringify(arr)) correct++;
     }
     window.alert("Score: "+correct);
-    //window.location.assign('index.html')
+    if (confirm('Are you sure you want to end the quiz??')) {
+        window.location.replace("C:/Users/gaura/Desktop/TypeScript%20Bootcamp/QuizGame/Pages/finish.html");
+    } 
 }
