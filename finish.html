@@ -12,13 +12,17 @@
         <!-- Typescipt Files  -->
         <script src="OnclickButton.js"></script>
     </head>
-    <body >
-        <div style="margin-top: 200px;" class=" container jumbotron">
+    <body onload="fetchData()">
 
-            <h1 class="heading" id="display_name">Hello Gaurav</h1>
-            <div class="card bg-danger text-white">
-                <div class="card-body" id="display_score">Success card</div>
+        <div style="margin-top: 200px;" class=" container jumbotron">
+            <h2><bold>Quiz Result:</bold></h2>
+            <h1 class="heading" id="display_name">Hello</h1>
+            <div class="card text-white">
+                <div  class="card-body" id="display_score"></div>
             </div>
+
+            <br/>
+            <a href="index.html" class="btn btn-primary btn-lg" >Go to main page</a>
         </div>    
         
     </body>

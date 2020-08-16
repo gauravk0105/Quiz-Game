@@ -1,20 +1,24 @@
-var username;
-var email_address;
-var correct=0;
 
+var username="";
+var email_address="";
+
+
+/* to store user detail */
 function storeDetails() {
     nameText = document.getElementById("form3");
     emailText = document.getElementById("form2");
-    username = nameText.value;
-    email_address = emailText.value;
+    sessionStorage.setItem("username", nameText.value);
+    globalThis.username  = nameText.value;
+    globalThis.email_address = emailText.value;
     alert("Hello, "+nameText.value+" Your quiz is getting ready....")
-    window.location.replace("C:/Users/gaura/Desktop/TypeScript%20Bootcamp/QuizGame/Pages/main.html");
+    window.location.href = "main.html"
 }
 
+/* start timer */
 function start_timer() {
     var timer = document.getElementById("timer");
     timer.innerHTML = "Time Left: ";
-    var sec         = 1800,
+    var sec         = 10,
     countDiv    = document.getElementById("div_timer"),
     secpass,
     countDown   = setInterval(function () {
@@ -37,11 +41,13 @@ function start_timer() {
         } else {
             clearInterval(countDown);
             alert("Your Time is over..")
-            window.location.replace("C:/Users/gaura/Desktop/TypeScript%20Bootcamp/QuizGame/Pages/finish.html");
-            }
+            toChecked(true);
+            
+        }
     }
 }
 
+/* storing questions and answer in data */
 data = {
     "QA": [
       {
@@ -74,12 +80,12 @@ data = {
     ]
   }
 
-
+/* adding question dynamically */
 function createQuiz() {
     var ch = ["a", "b", "c", "d"];
     for (i in data.QA) {
         var div_count = Math.floor(i/1);
-        console.log(div_count);
+        //console.log(div_count);
         var div_form = document.getElementById("set"+(div_count+1));
         var div_element = document.createElement("div");
         div_element.classList.add("container");
@@ -93,7 +99,7 @@ function createQuiz() {
             var input = document.createElement("input");
             input.type = "checkbox";
             input.name = "q"+data.QA[i].id;
-            console.log(input.name);
+            //console.log(input.name);
             input.value = ch[j];
             input.id = "id"+data.QA[i].id;
             li_element.appendChild(input);
@@ -107,8 +113,9 @@ function createQuiz() {
       }
 }
 
-function toChecked() {
-    //correct="";
+
+function toChecked(flag) {
+    var correct=0;
     for(i in data.QA) {   
        var choices = document.getElementsByName("q"+data.QA[i].id);
        var arr=[]; 
@@ -120,8 +127,36 @@ function toChecked() {
         }
         if(JSON.stringify(data.QA[i].answers)==JSON.stringify(arr)) correct++;
     }
+    sessionStorage.setItem("correct", correct);
     window.alert("Score: "+correct);
-    if (confirm('Are you sure you want to end the quiz??')) {
-        window.location.replace("C:/Users/gaura/Desktop/TypeScript%20Bootcamp/QuizGame/Pages/finish.html");
-    } 
+    if(flag==true) {
+        if(parseFloat(correct/5)*100 >= 70)
+        window.alert("Pass and your percentage is: "+(parseFloat(correct/5)*100));
+        else window.alert("Fail and your percentage is: "+(parseFloat(correct/5)*100))
+        window.location.href='finish.html'
+    } else {
+        if (confirm('Are you sure you want to end the quiz??')) {
+            if(parseFloat(correct/5)*100 >= 70)
+              alert("Pass and your percentage is: "+(parseFloat(correct/5)*100));
+           else alert("Fail and your percentage is: "+(parseFloat(correct/5)*100))
+           var anchor = document.getElementById("anchor");
+           anchor.href="finish.html";
+        } //else alert("No Contine it")
+    }
+}
+
+/* ------------------------------------------------------------------------------------------------------------- */
+
+function fetchData() {
+    loc_name = document.getElementById("display_name");
+    loc_score = document.getElementById("display_score");
+    loc_name.innerHTML = "Hello "+(sessionStorage.getItem("username"))+",";
+    if(parseFloat((sessionStorage.getItem("correct"))/5)*100 >= 70) {
+        loc_score.innerHTML = "Pass and your Percentage is: "+(parseFloat(sessionStorage.getItem("correct")/5)*100)+"%";
+        loc_score.classList.add("bg-success");
+    }
+    else {
+        loc_score.innerHTML = "Fail and your Percentage is: "+(parseFloat(sessionStorage.getItem("correct")/5)*100)+"%";
+        loc_score.classList.add("bg-danger");
+    }
 }
