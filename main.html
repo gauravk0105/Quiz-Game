@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Quiz Game</title>
-        
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <!-- Bootstrap files -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -15,30 +15,35 @@
          </style>
         <!-- Typescipt Files  -->
         <script src="OnclickButton.js"></script>
+        ​<script type = "text/javascript" > history.pushState(null, null, location.href); history.back(); history.forward(); window.onpopstate = function () { history.go(1); }; </script>
+        
     </head>
     <body onload="start_timer(); createQuiz();">
 
         <div class="container">
-            
+            <br/>
             <!-- Header -->
-            <div class="jumbotron">
+            <div class="card bg-info text-white">
+              <div class="card-body">
               <h1>Quiz-Game</h1>      
-              <p>Following Quiz contains 25 MCQ questions. 
+              <p>Following Quiz contains <span class="badge">25</span> MCQ questions. 
                   <ul>
                       <li>
                           Minimum Passing marks required 70%
                       </ls>
                   </ul>
                 Good Luck !!!!
-              </p>
+              </p></div>
             </div>
+            <br/>
             <!-- end header -->
+
 
             <!-- Timer -->
             <div class="container">
-              <div class="row">
-                <h2 class="col-md-6" id="timer"></h2>
-                <div class="col-md-2"><h2 class="pull-left" id="div_timer"></h2></div>
+              <div class="card bg-dark text-white" class="row">
+                <h3 class="card-header col-md-2" id="timer"></h3>
+                <div class="col-md-3 card-body"><h3 class="pull-left" id="div_timer"></h3></div>
               </div>
             </div>
             <!-- end Timer -->
@@ -87,16 +92,15 @@
                                   </ul> 
                             </div> -->
                         </div>
-                        <button class="btn btn-primary btn-small" data-toggle="tab" href="#page2">Next Section</button>
+                       
                       </div>
 
 
                       <div id="page2" class="container tab-pane fade"><br>
-                        <h3>Questions from 5 to 10</h3>
+                        <h3>Questions from 6 to 10</h3>
                         <div class="container" id="set2">
                         </div>
-                        <button class="btn btn-primary btn-small" data-toggle="tab" href="#page1">Previous Section</button>
-                        <button class="btn btn-primary btn-small" data-toggle="tab" href="#page3">Next Section</button>
+                        
                       </div>
                       
                       
@@ -104,24 +108,22 @@
                         <h3>Questions from 11 to 15 </h3>
                         <div class="container" id="set3">
                         </div>
-                        <button class="btn btn-primary btn-small" data-toggle="tab" href="#page2">Previous Section</button>  
-                        <button class="btn btn-primary btn-small" data-toggle="tab" href="#page4">Next Section</a>
+                      
                       </div>
 
                       <div id="page4" class="container tab-pane fade"><br>
                         <h3>Questions from 16 to 20</h3>
                         <div class="container" id="set4">
                         </div>
-                        <button class="btn btn-primary btn-small" data-toggle="tab" href="#page3">Previous Section</button>
-                        <button class="btn btn-primary btn-small" data-toggle="tab" href="#page5">Next Section</a>
+                        
                       </div>
 
                       <div id="page5" class="container tab-pane fade"><br>
                         <h3>Questions from 21 to 25</h3>
                         <div class="container" id="set5">
                         </div>
-                        <button class="btn btn-primary btn-small" data-toggle="tab" href="#page4">Previous Section</button>
-                         <a id="anchor"  type="submit" class="btn btn-primary" onclick="toChecked(false)">Submit</a> 
+                     
+                         <a id="anchor"  type="submit" class="btn btn-primary" onclick="toChecked(false)">Submit &nbsp;<i class="fa fa-hourglass-end"></i> </a> 
                       </div>
 
                   </div>
