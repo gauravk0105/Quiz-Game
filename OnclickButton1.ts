@@ -1,20 +1,13 @@
 
-var username="";
-var email_address="";
-
-
 /* to store user detail */
-function storeDetails() {
-    nameText = document.getElementById("form3");
-    emailText = document.getElementById("form2");
-    sessionStorage.setItem("username", nameText.value);
-    globalThis.username  = nameText.value;
-    globalThis.email_address = emailText.value;
-    alert("Hello, "+nameText.value+" Your quiz is getting ready....")
+function storeDetails():void {
+    let nameText = document.getElementById("form3");
+    let emailText = document.getElementById("form2");
+    sessionStorage.setItem("username", nameText.nodeValue);
 }
 
 /* start timer */
-function start_timer() {
+function start_timer():void {
     var timer = document.getElementById("timer");
     timer.innerHTML = "Time Left: ";
     var sec         = 1800,
@@ -29,10 +22,10 @@ function start_timer() {
         var min     = Math.floor(sec / 60),
             remSec  = sec % 60;
         if (remSec < 10) {
-            remSec = '0' + remSec;
+            let remSecX = '0' + remSec;
         }
         if (min < 10) {
-            min = '0' + min;
+            let minX = '0' + min;
         }
         countDiv.innerHTML = min + ":" + remSec;
         if (sec > 0) {
@@ -47,7 +40,7 @@ function start_timer() {
 }
 
 /* storing questions and answer in data */
-data = {
+let data = {
     "QA": [
       {
           "id":1, 
@@ -182,7 +175,7 @@ data = {
 /* adding question dynamically */
 function createQuiz() {
     var ch = ["a", "b", "c", "d"];
-    for (i in data.QA) {
+    for (let i in data.QA) {
         var div_count = Math.floor(i/5);
         //console.log(div_count);
         var div_form = document.getElementById("set"+(div_count+1));
@@ -193,7 +186,7 @@ function createQuiz() {
         heading_h5.classList.add("control-label");
         heading_h5.classList.add("col-sm-10");
         var ul_list = document.createElement("ul");
-        for(j=0;j<4;j++) {
+        for(let j=0;j<4;j++) {
             var li_element=document.createElement('li');
             var input = document.createElement("input");
             input.type = "checkbox";
@@ -214,17 +207,17 @@ function createQuiz() {
 
 
 function toChecked(flag) {
-    var correct=0;
     var id=[]
+    let correct:number=0;
     var history_options=[];
     var history_isCorrect=[];
-    for(i in data.QA) {   
+    for(let i in data.QA) {   
        var choices = document.getElementsByName("q"+data.QA[i].id);
        var arr=[]; 
        id.push(data.QA[i].id)
-       for(var j=0;j<choices.length;j++) {
-            if(choices[j].checked) {
-                arr.push(choices[j].value);
+       for(let j=0;j<choices.length;j++) {
+            if(choices[j]) {
+                arr.push(choices[j]);
             }
         }
         console.log(typeof(arr))
@@ -234,23 +227,23 @@ function toChecked(flag) {
             correct++;
         } else history_isCorrect.push(0)
     }
-    sessionStorage.setItem("correct", correct);
+    sessionStorage.setItem("correct", ""+correct);
     sessionStorage.setItem("iscorrect", JSON.stringify(history_isCorrect));
     sessionStorage.setItem("qid", JSON.stringify(id));
     sessionStorage.setItem("options_selected", JSON.stringify(history_options));
     window.alert("Your Score: "+correct);
     if(flag==true) {
-        if(parseFloat(correct/25)*100 >= 70)
-        window.alert("Pass and your percentage is: "+(parseFloat(correct/25)*100));
-        else window.alert("Fail and your percentage is: "+(parseFloat(correct/25)*100))
+        if((correct/25)*100 >= 70)
+           window.alert("Pass and your percentage is: "+((correct/25)*100));
+         else window.alert("Fail and your percentage is: "+((correct/25)*100))
         window.location.href='finish.html'
     } else {
         if (confirm('Are you sure you want to end the quiz??')) {
-            if(parseFloat(correct/25)*100 >= 70)
-              alert("Pass and your percentage is: "+(parseFloat(correct/25)*100));
-           else alert("Fail and your percentage is: "+(parseFloat(correct/25)*100))
+             if((correct/25)*100 >= 70)
+               alert("Pass and your percentage is: "+((correct/25)*100));
+           else alert("Fail and your percentage is: "+((correct/25)*100))
            var anchor = document.getElementById("anchor");
-           anchor.href="finish.html";
+            //anchor.href="finish.html";
         } //else alert("No Contine it")
     }
 }
@@ -258,26 +251,26 @@ function toChecked(flag) {
 /* ------------------------------------------------------------------------------------------------------------- */
 
 function fetchData() {
-    loc_name = document.getElementById("display_name");
-    loc_score = document.getElementById("display_score");
-    loc_name.innerHTML = "Hello "+(sessionStorage.getItem("username"))+",";
-    if(parseFloat((sessionStorage.getItem("correct"))/25)*100 >= 70) {
-        loc_score.innerHTML = "Pass and your Percentage is: "+(parseFloat(sessionStorage.getItem("correct")/25)*100)+"%";
-        loc_score.classList.add("bg-success");
-    }
-    else {
-        loc_score.innerHTML = "Fail and your Percentage is: "+(parseFloat(sessionStorage.getItem("correct")/25)*100)+"%";
-        loc_score.classList.add("bg-danger");
-    }
+    // let loc_name = document.getElementById("display_name");
+    // let loc_score = document.getElementById("display_score");
+    // let loc_name.innerHTML = "Hello "+(sessionStorage.getItem("username"))+",";
+    // if(((sessionStorage.getItem("correct"))/25)*100 >= 70) {
+    //      loc_score.innerHTML = "Pass and your Percentage is: "+(parseFloat(sessionStorage.getItem("correct")/25)*100)+"%";
+    //      loc_score.classList.add("bg-success");
+    //  }
+    //  else {
+    //      loc_score.innerHTML = "Fail and your Percentage is: "+(parseFloat(sessionStorage.getItem("correct")/25)*100)+"%";
+    //      loc_score.classList.add("bg-danger");
+    //  }
 }
 
 
 function createQuizWithReplay() {
-    history_isCorrect=JSON.parse(sessionStorage.getItem("iscorrect"));
-    id=JSON.parse(sessionStorage.getItem("qid"));
-    history_options=JSON.parse(sessionStorage.getItem("options_selected"));
+    let history_isCorrect=JSON.parse(sessionStorage.getItem("iscorrect"));
+    let id=JSON.parse(sessionStorage.getItem("qid"));
+    let history_options=JSON.parse(sessionStorage.getItem("options_selected"));
     var ch = ["a", "b", "c", "d"];
-    for (i in data.QA) {
+    for (let i in data.QA) {
         var div_count = Math.floor(i/5);
         var div_form = document.getElementById("set"+(div_count+1));
         var div_element = document.createElement("div");
@@ -287,7 +280,7 @@ function createQuizWithReplay() {
         heading_h5.classList.add("control-label");
         heading_h5.classList.add("col-sm-10");
         var ul_list = document.createElement("ul");
-        for(j=0;j<4;j++) {
+        for(let j=0;j<4;j++) {
             var li_element=document.createElement('li');
             var input = document.createElement("input");
             input.type = "checkbox";
@@ -299,7 +292,7 @@ function createQuizWithReplay() {
             li_element.innerHTML+=data.QA[i].options[j];
             ul_list.appendChild(li_element);
         }
-        new_div = document.createElement("div")
+        let new_div = document.createElement("div")
         new_div.classList.add("alert");
         if(history_isCorrect[i]==true) {
             new_div.classList.add("alert-success");
@@ -308,7 +301,7 @@ function createQuizWithReplay() {
             new_div.classList.add("alert-danger");
             new_div.innerHTML="<strong>Wrong Answer!</strong>"
         }
-        inside = document.createElement("div");
+        let inside = document.createElement("div");
         if(history_options[i].length==0)
             inside.innerHTML="<div class='col-3'>selected options: None</div> <div class='col-3'>correct options: "+data.QA[i].answers+"<\div>";
         else
